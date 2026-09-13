@@ -114,6 +114,7 @@
     z-index:30;
     display:flex; flex-direction:column;
     padding:18px 14px;
+    overflow-y:auto;
   }
   .nav-drawer.open{ transform:translateX(0); }
 
@@ -347,6 +348,27 @@
           <span class="nav-item-sub">Audio &amp; Video in andere Formate</span>
         </span>
       </button>
+      <button class="nav-item" data-view="trim">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+        <span class="nav-item-text">
+          <span class="nav-item-label">Schneiden</span>
+          <span class="nav-item-sub">Audio &amp; Video auf Ausschnitt kürzen</span>
+        </span>
+      </button>
+      <button class="nav-item" data-view="v2a">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2" ry="2"/><line x1="7" y1="3" x2="7" y2="21"/><line x1="17" y1="3" x2="17" y2="21"/><line x1="2" y1="9" x2="7" y2="9"/><line x1="2" y1="15" x2="7" y2="15"/><line x1="17" y1="9" x2="22" y2="9"/><line x1="17" y1="15" x2="22" y2="15"/></svg>
+        <span class="nav-item-text">
+          <span class="nav-item-label">Video → Audio</span>
+          <span class="nav-item-sub">Tonspur aus Video extrahieren</span>
+        </span>
+      </button>
+      <button class="nav-item" data-view="normalize">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <span class="nav-item-text">
+          <span class="nav-item-label">Lautstärke normalisieren</span>
+          <span class="nav-item-sub">Pegel auf Zielwert angleichen</span>
+        </span>
+      </button>
     </div>
   </nav>
 
@@ -472,6 +494,143 @@
         </div>
       </section>
 
+      <!-- ================= SCHNEIDEN ================= -->
+      <section class="view" id="view-trim">
+        <div class="rack-panel">
+          <div class="panel-head">
+            <h1>Schneiden</h1>
+            <p>Audio- oder Videodatei auf einen Ausschnitt kürzen</p>
+          </div>
+
+          <div class="drop-zone" id="trDropZone">
+            <div class="drop-zone-text">Audio- oder Videodatei auswählen oder hierher ziehen</div>
+            <div class="drop-zone-sub">MP3, WAV, FLAC, M4A, OGG, MP4, MOV, MKV, WEBM</div>
+            <input type="file" id="trFileInput" accept="audio/*,video/*">
+          </div>
+
+          <div class="file-status" id="trFileStatus"></div>
+
+          <div class="controls-grid" id="trControls" style="display:none;">
+            <div class="control-row">
+              <div class="control-header">
+                <span class="control-label">Start</span>
+                <span class="control-value" id="trValStart">0:00</span>
+              </div>
+              <input type="range" id="trSliderStart" min="0" max="0" value="0" step="0.1">
+            </div>
+            <div class="control-row">
+              <div class="control-header">
+                <span class="control-label">Ende</span>
+                <span class="control-value" id="trValEnd">0:00</span>
+              </div>
+              <input type="range" id="trSliderEnd" min="0" max="0" value="0" step="0.1">
+            </div>
+            <p class="format-hint" id="trDurationHint"></p>
+          </div>
+
+          <div class="btn-group">
+            <button class="btn btn-full" id="trBtnCut" disabled>Ausschnitt herunterladen</button>
+          </div>
+
+          <div class="progress-row" id="trProgressRow">
+            <div class="progress-track"><div class="progress-fill" id="trProgressFill"></div></div>
+            <div class="progress-label" id="trProgressLabel">Wird geschnitten … 0%</div>
+          </div>
+
+          <p class="format-hint" style="margin-top:16px;">Beim ersten Schneiden wird einmalig die Konvertierungs-Engine geladen (ca. 30 MB, danach zwischengespeichert).</p>
+        </div>
+      </section>
+
+      <!-- ================= VIDEO → AUDIO ================= -->
+      <section class="view" id="view-v2a">
+        <div class="rack-panel">
+          <div class="panel-head">
+            <h1>Video → Audio</h1>
+            <p>Tonspur aus einem Video extrahieren</p>
+          </div>
+
+          <div class="drop-zone" id="vaDropZone">
+            <div class="drop-zone-text">Videodatei auswählen oder hierher ziehen</div>
+            <div class="drop-zone-sub">MP4, MOV, MKV, WEBM, AVI</div>
+            <input type="file" id="vaFileInput" accept="video/*">
+          </div>
+
+          <div class="file-status" id="vaFileStatus"></div>
+
+          <div class="controls-grid">
+            <div class="control-row">
+              <span class="field-label">Zielformat</span>
+              <div class="select-wrap">
+                <select class="format-select" id="vaFormatSelect">
+                  <option value="mp3">MP3</option>
+                  <option value="wav">WAV (verlustfrei)</option>
+                  <option value="flac">FLAC (verlustfrei)</option>
+                  <option value="ogg">OGG (Vorbis)</option>
+                  <option value="m4a">M4A / AAC</option>
+                  <option value="opus">Opus</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="control-row" id="vaBitrateRow">
+              <span class="field-label">Bitrate</span>
+              <div class="segmented" id="vaBitrateSeg">
+                <button type="button" data-bitrate="128">128 kbps</button>
+                <button type="button" class="active" data-bitrate="192">192 kbps</button>
+                <button type="button" data-bitrate="320">320 kbps</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button class="btn btn-full" id="vaBtnExtract" disabled>Audio extrahieren</button>
+          </div>
+
+          <div class="progress-row" id="vaProgressRow">
+            <div class="progress-track"><div class="progress-fill" id="vaProgressFill"></div></div>
+            <div class="progress-label" id="vaProgressLabel">Wird extrahiert … 0%</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= LAUTSTÄRKE NORMALISIEREN ================= -->
+      <section class="view" id="view-normalize">
+        <div class="rack-panel">
+          <div class="panel-head">
+            <h1>Lautstärke normalisieren</h1>
+            <p>Audiodatei auf einen gleichmäßigen Pegel bringen</p>
+          </div>
+
+          <div class="drop-zone" id="nmDropZone">
+            <div class="drop-zone-text">Audiodatei auswählen oder hierher ziehen</div>
+            <div class="drop-zone-sub">MP3, WAV, FLAC, M4A, OGG</div>
+            <input type="file" id="nmFileInput" accept="audio/*">
+          </div>
+
+          <div class="file-status" id="nmFileStatus"></div>
+
+          <div class="controls-grid">
+            <div class="control-row">
+              <div class="control-header">
+                <span class="control-label">Ziellautheit</span>
+                <span class="control-value" id="nmValTarget">-16 LUFS</span>
+              </div>
+              <input type="range" id="nmSliderTarget" min="-30" max="-8" value="-16" step="1">
+              <p class="format-hint">Streaming-Standard liegt bei etwa -14 bis -16 LUFS. Niedrigere Werte (z. B. -23) klingen leiser und dynamischer.</p>
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button class="btn btn-full" id="nmBtnNormalize" disabled>Normalisieren &amp; herunterladen</button>
+          </div>
+
+          <div class="progress-row" id="nmProgressRow">
+            <div class="progress-track"><div class="progress-fill" id="nmProgressFill"></div></div>
+            <div class="progress-label" id="nmProgressLabel">Wird normalisiert … 0%</div>
+          </div>
+        </div>
+      </section>
+
     </div>
   </main>
 
@@ -488,7 +647,10 @@
 
     const viewMeta = {
       bass: { tag: '— Bass Booster' },
-      convert: { tag: '— Konvertieren' }
+      convert: { tag: '— Konvertieren' },
+      trim: { tag: '— Schneiden' },
+      v2a: { tag: '— Video → Audio' },
+      normalize: { tag: '— Lautstärke normalisieren' }
     };
 
     function openDrawer(){
@@ -540,6 +702,14 @@
       return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
     }
     window.formatBytes = formatBytes;
+
+    function formatTime(sec){
+      sec = Math.max(0, Math.round(sec));
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return `${m}:${s.toString().padStart(2,'0')}`;
+    }
+    window.formatTime = formatTime;
 
     /* ======================================================
        BASS BOOSTER
@@ -807,13 +977,64 @@
   </script>
 
   <!-- ======================================================
-       KONVERTIEREN — läuft über FFmpeg (WebAssembly) im Browser,
-       dadurch werden deutlich mehr Ziel- und Quellformate unterstützt.
+       KONVERTIEREN / SCHNEIDEN / VIDEO→AUDIO / NORMALISIEREN
+       — laufen alle über die gleiche FFmpeg (WebAssembly) Instanz
+       im Browser, dadurch werden deutlich mehr Format-Kombinationen
+       unterstützt.
   ====================================================== -->
   <script type="module">
     import { FFmpeg } from "https://cdn.jsdelivr.net/npm/@ffmpeg/[email protected]/+esm";
     import { fetchFile, toBlobURL } from "https://cdn.jsdelivr.net/npm/@ffmpeg/[email protected]/+esm";
 
+    /* ---------- gemeinsame FFmpeg-Instanz ---------- */
+    let ffmpeg = null;
+    let ffmpegLoadPromise = null;
+    let currentProgressCb = null;
+
+    function ensureFFmpeg(onInitialLoadProgress){
+      if (ffmpeg) return Promise.resolve(ffmpeg);
+      if (ffmpegLoadPromise) return ffmpegLoadPromise;
+
+      if (onInitialLoadProgress) onInitialLoadProgress(0, 'Engine wird geladen … (einmalig, ca. 30 MB)');
+      const instance = new FFmpeg();
+      instance.on('progress', ({ progress }) => {
+        if (currentProgressCb) currentProgressCb(Math.min(100, Math.max(0, Math.round(progress * 100))));
+      });
+
+      ffmpegLoadPromise = (async () => {
+        const baseURL = 'https://unpkg.com/@ffmpeg/[email protected]/dist/umd';
+        const coreURL = await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript');
+        const wasmURL = await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm');
+        await instance.load({ coreURL, wasmURL });
+        ffmpeg = instance;
+        return ffmpeg;
+      })();
+
+      return ffmpegLoadPromise;
+    }
+
+    const FORMAT_INFO = {
+      mp3:  { ext: 'mp3',  mime: 'audio/mpeg', lossy: true,  hint: 'Gute Balance aus Größe und Qualität, von fast allem abspielbar.' },
+      wav:  { ext: 'wav',  mime: 'audio/wav',  lossy: false, hint: 'Unkomprimiert, verlustfrei, aber große Dateigröße.' },
+      flac: { ext: 'flac', mime: 'audio/flac', lossy: false, hint: 'Verlustfrei und deutlich kleiner als WAV.' },
+      ogg:  { ext: 'ogg',  mime: 'audio/ogg',  lossy: true,  hint: 'Offenes Format, ähnliche Qualität wie MP3.' },
+      m4a:  { ext: 'm4a',  mime: 'audio/mp4',  lossy: true,  hint: 'AAC-Format, Standard bei Apple-Geräten.' },
+      opus: { ext: 'opus', mime: 'audio/opus', lossy: true,  hint: 'Sehr effizient, ideal für Sprache und kleine Dateien.' }
+    };
+
+    function audioEncodeArgs(targetFormat, bitrate){
+      if (targetFormat === 'mp3')  return ['-c:a', 'libmp3lame', '-b:a', bitrate + 'k'];
+      if (targetFormat === 'ogg')  return ['-c:a', 'libvorbis', '-b:a', bitrate + 'k'];
+      if (targetFormat === 'm4a')  return ['-c:a', 'aac', '-b:a', bitrate + 'k'];
+      if (targetFormat === 'opus') return ['-c:a', 'libopus', '-b:a', bitrate + 'k'];
+      if (targetFormat === 'flac') return ['-c:a', 'flac'];
+      if (targetFormat === 'wav')  return ['-c:a', 'pcm_s16le'];
+      return [];
+    }
+
+    /* ======================================================
+       KONVERTIEREN
+    ====================================================== */
     const cvDropZone = document.getElementById('cvDropZone');
     const cvFileInput = document.getElementById('cvFileInput');
     const cvFileStatus = document.getElementById('cvFileStatus');
@@ -828,16 +1049,6 @@
 
     let cvFile = null;
     let cvBitrate = 192;
-    let currentProgressCb = null;
-
-    const FORMAT_INFO = {
-      mp3:  { ext: 'mp3',  mime: 'audio/mpeg', lossy: true,  hint: 'Gute Balance aus Größe und Qualität, von fast allem abspielbar.' },
-      wav:  { ext: 'wav',  mime: 'audio/wav',  lossy: false, hint: 'Unkomprimiert, verlustfrei, aber große Dateigröße.' },
-      flac: { ext: 'flac', mime: 'audio/flac', lossy: false, hint: 'Verlustfrei und deutlich kleiner als WAV.' },
-      ogg:  { ext: 'ogg',  mime: 'audio/ogg',  lossy: true,  hint: 'Offenes Format, ähnliche Qualität wie MP3.' },
-      m4a:  { ext: 'm4a',  mime: 'audio/mp4',  lossy: true,  hint: 'AAC-Format, Standard bei Apple-Geräten.' },
-      opus: { ext: 'opus', mime: 'audio/opus', lossy: true,  hint: 'Sehr effizient, ideal für Sprache und kleine Dateien.' }
-    };
 
     function updateFormatUI(){
       const info = FORMAT_INFO[cvFormatSelect.value];
@@ -877,39 +1088,14 @@
       cvBtnConvert.disabled = false;
     }
 
-    function showProgress(pct, label){
+    function showCvProgress(pct, label){
       cvProgressRow.classList.add('visible');
       cvProgressFill.style.width = pct + '%';
       cvProgressLabel.textContent = label;
     }
-    function hideProgress(){
+    function hideCvProgress(){
       cvProgressRow.classList.remove('visible');
       cvProgressFill.style.width = '0%';
-    }
-
-    let ffmpeg = null;
-    let ffmpegLoadPromise = null;
-
-    function ensureFFmpeg(){
-      if (ffmpeg) return Promise.resolve(ffmpeg);
-      if (ffmpegLoadPromise) return ffmpegLoadPromise;
-
-      showProgress(0, 'Engine wird geladen … (einmalig, ca. 30 MB)');
-      const instance = new FFmpeg();
-      instance.on('progress', ({ progress }) => {
-        if (currentProgressCb) currentProgressCb(Math.min(100, Math.round(progress * 100)));
-      });
-
-      ffmpegLoadPromise = (async () => {
-        const baseURL = 'https://unpkg.com/@ffmpeg/[email protected]/dist/umd';
-        const coreURL = await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript');
-        const wasmURL = await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm');
-        await instance.load({ coreURL, wasmURL });
-        ffmpeg = instance;
-        return ffmpeg;
-      })();
-
-      return ffmpegLoadPromise;
     }
 
     cvBtnConvert.addEventListener('click', async () => {
@@ -924,28 +1110,21 @@
       const outputName = 'output.' + info.ext;
 
       try{
-        const ff = await ensureFFmpeg();
+        const ff = await ensureFFmpeg(showCvProgress);
 
-        currentProgressCb = (pct) => showProgress(pct, `Wird konvertiert … ${pct}%`);
-        showProgress(0, 'Datei wird vorbereitet …');
+        currentProgressCb = (pct) => showCvProgress(pct, `Wird konvertiert … ${pct}%`);
+        showCvProgress(0, 'Datei wird vorbereitet …');
 
         await ff.writeFile(inputName, await fetchFile(cvFile));
 
-        const args = ['-i', inputName, '-vn'];
-        if (targetFormat === 'mp3') args.push('-c:a', 'libmp3lame', '-b:a', cvBitrate + 'k');
-        else if (targetFormat === 'ogg') args.push('-c:a', 'libvorbis', '-b:a', cvBitrate + 'k');
-        else if (targetFormat === 'm4a') args.push('-c:a', 'aac', '-b:a', cvBitrate + 'k');
-        else if (targetFormat === 'opus') args.push('-c:a', 'libopus', '-b:a', cvBitrate + 'k');
-        else if (targetFormat === 'flac') args.push('-c:a', 'flac');
-        else if (targetFormat === 'wav') args.push('-c:a', 'pcm_s16le');
-        args.push(outputName);
+        const args = ['-i', inputName, '-vn', ...audioEncodeArgs(targetFormat, cvBitrate), outputName];
 
-        showProgress(0, 'Wird konvertiert … 0%');
+        showCvProgress(0, 'Wird konvertiert … 0%');
         await ff.exec(args);
 
         const data = await ff.readFile(outputName);
         const blob = new Blob([data.buffer], { type: info.mime });
-        showProgress(100, 'Fertig');
+        showCvProgress(100, 'Fertig');
         window.downloadBlob(blob, `${baseName}.${info.ext}`);
 
         ff.deleteFile(inputName).catch(() => {});
@@ -956,8 +1135,318 @@
       }
 
       currentProgressCb = null;
-      setTimeout(hideProgress, 800);
+      setTimeout(hideCvProgress, 800);
       cvBtnConvert.disabled = false;
+    });
+
+    /* ======================================================
+       SCHNEIDEN
+    ====================================================== */
+    const trDropZone = document.getElementById('trDropZone');
+    const trFileInput = document.getElementById('trFileInput');
+    const trFileStatus = document.getElementById('trFileStatus');
+    const trControls = document.getElementById('trControls');
+    const trSliderStart = document.getElementById('trSliderStart');
+    const trSliderEnd = document.getElementById('trSliderEnd');
+    const trValStart = document.getElementById('trValStart');
+    const trValEnd = document.getElementById('trValEnd');
+    const trDurationHint = document.getElementById('trDurationHint');
+    const trBtnCut = document.getElementById('trBtnCut');
+    const trProgressRow = document.getElementById('trProgressRow');
+    const trProgressFill = document.getElementById('trProgressFill');
+    const trProgressLabel = document.getElementById('trProgressLabel');
+
+    let trFile = null;
+    let trDuration = 0;
+
+    trDropZone.addEventListener('click', () => trFileInput.click());
+    trDropZone.addEventListener('dragover', (e) => { e.preventDefault(); trDropZone.classList.add('dragover'); });
+    trDropZone.addEventListener('dragleave', () => trDropZone.classList.remove('dragover'));
+    trDropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      trDropZone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) handleTrimFile(e.dataTransfer.files[0]);
+    });
+    trFileInput.addEventListener('change', (e) => {
+      if (e.target.files.length) handleTrimFile(e.target.files[0]);
+    });
+
+    function handleTrimFile(file){
+      trFile = file;
+      trFileStatus.className = 'file-status';
+      trFileStatus.style.display = 'block';
+      trFileStatus.textContent = `Lade ${file.name} …`;
+      trBtnCut.disabled = true;
+      trControls.style.display = 'none';
+
+      const mediaEl = document.createElement(file.type.startsWith('video/') ? 'video' : 'audio');
+      const url = URL.createObjectURL(file);
+      mediaEl.preload = 'metadata';
+      mediaEl.src = url;
+      mediaEl.onloadedmetadata = () => {
+        trDuration = mediaEl.duration;
+        URL.revokeObjectURL(url);
+        trSliderStart.max = trDuration;
+        trSliderEnd.max = trDuration;
+        trSliderStart.value = 0;
+        trSliderEnd.value = trDuration;
+        trValStart.textContent = window.formatTime(0);
+        trValEnd.textContent = window.formatTime(trDuration);
+        trDurationHint.textContent = `Gesamtlänge: ${window.formatTime(trDuration)}`;
+        trFileStatus.textContent = `${file.name} (${window.formatTime(trDuration)})`;
+        trControls.style.display = 'flex';
+        trBtnCut.disabled = false;
+      };
+      mediaEl.onerror = () => {
+        trFileStatus.classList.add('error');
+        trFileStatus.textContent = 'Datei konnte nicht gelesen werden.';
+      };
+    }
+
+    trSliderStart.addEventListener('input', () => {
+      let start = parseFloat(trSliderStart.value);
+      let end = parseFloat(trSliderEnd.value);
+      if (start >= end){ start = Math.max(0, end - 0.1); trSliderStart.value = start; }
+      trValStart.textContent = window.formatTime(start);
+    });
+    trSliderEnd.addEventListener('input', () => {
+      let end = parseFloat(trSliderEnd.value);
+      let start = parseFloat(trSliderStart.value);
+      if (end <= start){ end = Math.min(trDuration, start + 0.1); trSliderEnd.value = end; }
+      trValEnd.textContent = window.formatTime(end);
+    });
+
+    function showTrProgress(pct, label){
+      trProgressRow.classList.add('visible');
+      trProgressFill.style.width = pct + '%';
+      trProgressLabel.textContent = label;
+    }
+    function hideTrProgress(){
+      trProgressRow.classList.remove('visible');
+      trProgressFill.style.width = '0%';
+    }
+
+    trBtnCut.addEventListener('click', async () => {
+      if (!trFile) return;
+      trBtnCut.disabled = true;
+      const start = parseFloat(trSliderStart.value);
+      const end = parseFloat(trSliderEnd.value);
+      const baseName = trFile.name.replace(/\.[^/.]+$/, '');
+      const ext = (trFile.name.split('.').pop() || 'dat').toLowerCase();
+      const inputName = 'trim_input.' + ext;
+      const outputName = 'trim_output.' + ext;
+
+      try{
+        const ff = await ensureFFmpeg(showTrProgress);
+        currentProgressCb = (pct) => showTrProgress(pct, `Wird geschnitten … ${pct}%`);
+        showTrProgress(0, 'Datei wird vorbereitet …');
+        await ff.writeFile(inputName, await fetchFile(trFile));
+
+        showTrProgress(0, 'Wird geschnitten … 0%');
+        let ret = await ff.exec(['-i', inputName, '-ss', String(start), '-to', String(end), '-c', 'copy', outputName]);
+        if (ret !== 0){
+          await ff.deleteFile(outputName).catch(() => {});
+          ret = await ff.exec(['-i', inputName, '-ss', String(start), '-to', String(end), outputName]);
+        }
+
+        const data = await ff.readFile(outputName);
+        const blob = new Blob([data.buffer], { type: trFile.type || 'application/octet-stream' });
+        showTrProgress(100, 'Fertig');
+        window.downloadBlob(blob, `${baseName}_geschnitten.${ext}`);
+
+        ff.deleteFile(inputName).catch(() => {});
+        ff.deleteFile(outputName).catch(() => {});
+      } catch(err){
+        trFileStatus.classList.add('error');
+        trFileStatus.textContent = 'Schneiden fehlgeschlagen.';
+      }
+      currentProgressCb = null;
+      setTimeout(hideTrProgress, 800);
+      trBtnCut.disabled = false;
+    });
+
+    /* ======================================================
+       VIDEO → AUDIO
+    ====================================================== */
+    const vaDropZone = document.getElementById('vaDropZone');
+    const vaFileInput = document.getElementById('vaFileInput');
+    const vaFileStatus = document.getElementById('vaFileStatus');
+    const vaFormatSelect = document.getElementById('vaFormatSelect');
+    const vaBitrateRow = document.getElementById('vaBitrateRow');
+    const vaBitrateSeg = document.getElementById('vaBitrateSeg');
+    const vaBtnExtract = document.getElementById('vaBtnExtract');
+    const vaProgressRow = document.getElementById('vaProgressRow');
+    const vaProgressFill = document.getElementById('vaProgressFill');
+    const vaProgressLabel = document.getElementById('vaProgressLabel');
+
+    let vaFile = null;
+    let vaBitrate = 192;
+
+    function updateVaFormatUI(){
+      const info = FORMAT_INFO[vaFormatSelect.value];
+      vaBitrateRow.style.display = info.lossy ? 'flex' : 'none';
+    }
+    vaFormatSelect.addEventListener('change', updateVaFormatUI);
+    updateVaFormatUI();
+
+    vaBitrateSeg.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        vaBitrateSeg.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        vaBitrate = parseInt(btn.dataset.bitrate, 10);
+      });
+    });
+
+    vaDropZone.addEventListener('click', () => vaFileInput.click());
+    vaDropZone.addEventListener('dragover', (e) => { e.preventDefault(); vaDropZone.classList.add('dragover'); });
+    vaDropZone.addEventListener('dragleave', () => vaDropZone.classList.remove('dragover'));
+    vaDropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      vaDropZone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) handleVaFile(e.dataTransfer.files[0]);
+    });
+    vaFileInput.addEventListener('change', (e) => {
+      if (e.target.files.length) handleVaFile(e.target.files[0]);
+    });
+
+    function handleVaFile(file){
+      vaFile = file;
+      vaFileStatus.className = 'file-status';
+      vaFileStatus.style.display = 'block';
+      vaFileStatus.textContent = `${file.name} · ${window.formatBytes(file.size)}`;
+      vaBtnExtract.disabled = false;
+    }
+
+    function showVaProgress(pct, label){
+      vaProgressRow.classList.add('visible');
+      vaProgressFill.style.width = pct + '%';
+      vaProgressLabel.textContent = label;
+    }
+    function hideVaProgress(){
+      vaProgressRow.classList.remove('visible');
+      vaProgressFill.style.width = '0%';
+    }
+
+    vaBtnExtract.addEventListener('click', async () => {
+      if (!vaFile) return;
+      vaBtnExtract.disabled = true;
+
+      const targetFormat = vaFormatSelect.value;
+      const info = FORMAT_INFO[targetFormat];
+      const baseName = vaFile.name.replace(/\.[^/.]+$/, '');
+      const inputExt = (vaFile.name.split('.').pop() || 'dat').toLowerCase();
+      const inputName = 'va_input.' + inputExt;
+      const outputName = 'va_output.' + info.ext;
+
+      try{
+        const ff = await ensureFFmpeg(showVaProgress);
+        currentProgressCb = (pct) => showVaProgress(pct, `Wird extrahiert … ${pct}%`);
+        showVaProgress(0, 'Datei wird vorbereitet …');
+        await ff.writeFile(inputName, await fetchFile(vaFile));
+
+        const args = ['-i', inputName, '-vn', ...audioEncodeArgs(targetFormat, vaBitrate), outputName];
+
+        showVaProgress(0, 'Wird extrahiert … 0%');
+        await ff.exec(args);
+
+        const data = await ff.readFile(outputName);
+        const blob = new Blob([data.buffer], { type: info.mime });
+        showVaProgress(100, 'Fertig');
+        window.downloadBlob(blob, `${baseName}.${info.ext}`);
+
+        ff.deleteFile(inputName).catch(() => {});
+        ff.deleteFile(outputName).catch(() => {});
+      } catch(err){
+        vaFileStatus.classList.add('error');
+        vaFileStatus.textContent = 'Extraktion fehlgeschlagen.';
+      }
+      currentProgressCb = null;
+      setTimeout(hideVaProgress, 800);
+      vaBtnExtract.disabled = false;
+    });
+
+    /* ======================================================
+       LAUTSTÄRKE NORMALISIEREN
+    ====================================================== */
+    const nmDropZone = document.getElementById('nmDropZone');
+    const nmFileInput = document.getElementById('nmFileInput');
+    const nmFileStatus = document.getElementById('nmFileStatus');
+    const nmSliderTarget = document.getElementById('nmSliderTarget');
+    const nmValTarget = document.getElementById('nmValTarget');
+    const nmBtnNormalize = document.getElementById('nmBtnNormalize');
+    const nmProgressRow = document.getElementById('nmProgressRow');
+    const nmProgressFill = document.getElementById('nmProgressFill');
+    const nmProgressLabel = document.getElementById('nmProgressLabel');
+
+    let nmFile = null;
+
+    nmSliderTarget.addEventListener('input', () => {
+      nmValTarget.textContent = `${nmSliderTarget.value} LUFS`;
+    });
+
+    nmDropZone.addEventListener('click', () => nmFileInput.click());
+    nmDropZone.addEventListener('dragover', (e) => { e.preventDefault(); nmDropZone.classList.add('dragover'); });
+    nmDropZone.addEventListener('dragleave', () => nmDropZone.classList.remove('dragover'));
+    nmDropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      nmDropZone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) handleNmFile(e.dataTransfer.files[0]);
+    });
+    nmFileInput.addEventListener('change', (e) => {
+      if (e.target.files.length) handleNmFile(e.target.files[0]);
+    });
+
+    function handleNmFile(file){
+      nmFile = file;
+      nmFileStatus.className = 'file-status';
+      nmFileStatus.style.display = 'block';
+      nmFileStatus.textContent = `${file.name} · ${window.formatBytes(file.size)}`;
+      nmBtnNormalize.disabled = false;
+    }
+
+    function showNmProgress(pct, label){
+      nmProgressRow.classList.add('visible');
+      nmProgressFill.style.width = pct + '%';
+      nmProgressLabel.textContent = label;
+    }
+    function hideNmProgress(){
+      nmProgressRow.classList.remove('visible');
+      nmProgressFill.style.width = '0%';
+    }
+
+    nmBtnNormalize.addEventListener('click', async () => {
+      if (!nmFile) return;
+      nmBtnNormalize.disabled = true;
+
+      const target = nmSliderTarget.value;
+      const baseName = nmFile.name.replace(/\.[^/.]+$/, '');
+      const ext = (nmFile.name.split('.').pop() || 'mp3').toLowerCase();
+      const inputName = 'nm_input.' + ext;
+      const outputName = 'nm_output.' + ext;
+
+      try{
+        const ff = await ensureFFmpeg(showNmProgress);
+        currentProgressCb = (pct) => showNmProgress(pct, `Wird normalisiert … ${pct}%`);
+        showNmProgress(0, 'Datei wird vorbereitet …');
+        await ff.writeFile(inputName, await fetchFile(nmFile));
+
+        showNmProgress(0, 'Wird normalisiert … 0%');
+        await ff.exec(['-i', inputName, '-af', `loudnorm=I=${target}:TP=-1.5:LRA=11`, outputName]);
+
+        const data = await ff.readFile(outputName);
+        const blob = new Blob([data.buffer], { type: nmFile.type || 'audio/mpeg' });
+        showNmProgress(100, 'Fertig');
+        window.downloadBlob(blob, `${baseName}_normalisiert.${ext}`);
+
+        ff.deleteFile(inputName).catch(() => {});
+        ff.deleteFile(outputName).catch(() => {});
+      } catch(err){
+        nmFileStatus.classList.add('error');
+        nmFileStatus.textContent = 'Normalisierung fehlgeschlagen.';
+      }
+      currentProgressCb = null;
+      setTimeout(hideNmProgress, 800);
+      nmBtnNormalize.disabled = false;
     });
   </script>
 </body>
