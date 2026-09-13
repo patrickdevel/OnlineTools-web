@@ -3,461 +3,489 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OniineTools - 8-Bit & 4-Bit Audio Converter</title>
+    <title>OniineTools — Bass Booster</title>
     <style>
         :root {
-            --bg-color: #0d1117;
-            --panel-bg: #161b22;
-            --border-color: #30363d;
-            --accent-green: #00ff66;
-            --accent-cyan: #00e5ff;
-            --accent-pink: #ff0055;
-            --text-main: #c9d1d9;
-            --text-muted: #8b949e;
+            --bg: #09090b;
+            --card: #121215;
+            --border: #222226;
+            --text-primary: #f4f4f5;
+            --text-secondary: #71717a;
+            --accent: #ffffff;
+            --accent-glow: rgba(255, 255, 255, 0.05);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background-color: var(--bg);
+            color: var(--text-primary);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
+            justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 20px;
+            padding: 24px;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 540px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
         }
 
         header {
-            text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 28px;
+            text-align: left;
         }
 
         header h1 {
-            font-size: 2.5rem;
-            color: var(--accent-green);
-            text-shadow: 0 0 10px rgba(0, 255, 102, 0.4);
-            letter-spacing: 2px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
         }
 
         header p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-top: 5px;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 800px;
-            background: var(--panel-bg);
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            padding: 25px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
         }
 
         .drop-zone {
-            border: 2px dashed var(--accent-green);
-            border-radius: 6px;
-            padding: 40px 20px;
+            border: 1px dashed #333338;
+            border-radius: 12px;
+            padding: 36px 20px;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s ease;
-            background: rgba(0, 255, 102, 0.02);
+            background: rgba(255, 255, 255, 0.01);
         }
 
         .drop-zone:hover, .drop-zone.dragover {
-            background: rgba(0, 255, 102, 0.08);
-            border-color: var(--accent-cyan);
+            border-color: var(--text-primary);
+            background: var(--accent-glow);
         }
 
-        .drop-zone p {
-            font-size: 1.1rem;
-            color: var(--text-main);
+        .drop-zone-text {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            font-weight: 500;
         }
 
-        .drop-zone span {
-            display: block;
-            margin-top: 8px;
-            font-size: 0.8rem;
-            color: var(--text-muted);
+        .drop-zone-sub {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            margin-top: 6px;
         }
 
         input[type="file"] {
             display: none;
         }
 
-        .controls {
-            margin-top: 25px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
+        .file-status {
+            margin-top: 16px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            display: none;
+            word-break: break-all;
         }
 
-        .control-group {
+        .controls-grid {
+            margin-top: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .control-row {
             display: flex;
             flex-direction: column;
             gap: 8px;
-            background: rgba(255,255,255,0.02);
-            padding: 12px;
-            border-radius: 4px;
-            border: 1px solid var(--border-color);
         }
 
-        .control-group label {
-            font-size: 0.85rem;
-            color: var(--accent-cyan);
-            font-weight: bold;
+        .control-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.82rem;
         }
 
-        select, input[type="range"] {
-            background: var(--bg-color);
-            color: var(--text-main);
-            border: 1px solid var(--border-color);
-            padding: 8px;
-            border-radius: 4px;
+        .control-label {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .control-value {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 4px;
+            border-radius: 2px;
+            background: #222228;
             outline: none;
         }
 
-        .val-display {
-            font-size: 0.8rem;
-            color: var(--accent-green);
-            text-align: right;
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--text-primary);
+            cursor: pointer;
+            transition: transform 0.1s ease;
         }
 
-        .visualizer-container {
-            margin-top: 25px;
-            background: #000;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+        }
+
+        .visualizer-box {
+            margin-top: 28px;
+            height: 60px;
+            width: 100%;
+            background: #000000;
+            border-radius: 8px;
             overflow: hidden;
-            position: relative;
+            border: 1px solid var(--border);
         }
 
         canvas {
             width: 100%;
-            height: 120px;
+            height: 100%;
             display: block;
         }
 
-        .action-buttons {
-            margin-top: 25px;
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
+        .btn-group {
+            margin-top: 28px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
         }
 
         button {
-            flex: 1;
-            min-width: 140px;
-            background: var(--accent-green);
-            color: #000;
+            background: var(--text-primary);
+            color: var(--bg);
             border: none;
-            padding: 12px 20px;
-            font-weight: bold;
-            font-size: 0.9rem;
+            padding: 12px 18px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border-radius: 8px;
             cursor: pointer;
-            border-radius: 4px;
-            transition: background 0.2s;
+            transition: opacity 0.2s ease, transform 0.1s ease;
         }
 
         button:hover:not(:disabled) {
-            background: var(--accent-cyan);
+            opacity: 0.9;
+        }
+
+        button:active:not(:disabled) {
+            transform: scale(0.98);
         }
 
         button:disabled {
-            background: var(--border-color);
-            color: var(--text-muted);
+            background: #222226;
+            color: #44444c;
             cursor: not-allowed;
         }
 
-        #btnDownload {
-            background: var(--accent-pink);
-            color: #fff;
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border);
         }
 
-        #btnDownload:hover:not(:disabled) {
-            background: #ff3377;
-        }
-
-        .file-info {
-            margin-top: 15px;
-            font-size: 0.85rem;
-            color: var(--accent-green);
-            display: none;
+        .btn-secondary:hover:not(:disabled) {
+            background: rgba(255, 255, 255, 0.04);
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>OniineTools</h1>
-        <p>80s Retro Arcade Sound & 4-Bit Chiptune Audio Converter</p>
-    </header>
+    <div class="main-container">
+        <header>
+            <h1>OniineTools</h1>
+            <p>Minimalist Audio Bass Booster</p>
+        </header>
 
-    <div class="container">
         <div class="drop-zone" id="dropZone">
-            <p>🎵 Audio-Datei hierher ziehen oder klicken</p>
-            <span>Unterstützt MP3, WAV, OGG, FLAC</span>
+            <div class="drop-zone-text">Audio-Datei auswählen oder hierher ziehen</div>
+            <div class="drop-zone-sub">MP3, WAV, FLAC, M4A, OGG</div>
             <input type="file" id="fileInput" accept="audio/*">
         </div>
 
-        <div class="file-info" id="fileInfo"></div>
+        <div class="file-status" id="fileStatus"></div>
 
-        <div class="controls">
-            <div class="control-group">
-                <label for="bitDepth">Bit-Tiefe (Quantisierung):</label>
-                <select id="bitDepth">
-                    <option value="2">2-Bit (Extreme Glitch)</option>
-                    <option value="4" selected>4-Bit (Classic 80s Chip)</option>
-                    <option value="8">8-Bit (Retro Console)</option>
-                </select>
+        <div class="controls-grid">
+            <div class="control-row">
+                <div class="control-header">
+                    <span class="control-label">Bass Boost</span>
+                    <span class="control-value" id="valBoost">+12 dB</span>
+                </div>
+                <input type="range" id="sliderBoost" min="0" max="24" value="12" step="0.5">
             </div>
 
-            <div class="control-group">
-                <label for="sampleRate">Sample-Rate Reduction:</label>
-                <input type="range" id="sampleRate" min="1" max="10" value="4" step="1">
-                <div class="val-display" id="sampleRateVal">4x Downsampling</div>
+            <div class="control-row">
+                <div class="control-header">
+                    <span class="control-label">Frequenz (Cutoff)</span>
+                    <span class="control-value" id="valFreq">100 Hz</span>
+                </div>
+                <input type="range" id="sliderFreq" min="40" max="220" value="100" step="5">
             </div>
 
-            <div class="control-group">
-                <label for="mode">Soundchip-Mode:</label>
-                <select id="mode">
-                    <option value="square">Square Wave Emulation (Arcade)</option>
-                    <option value="bitcrush" selected>Clean Bitcrush + Aliasing</option>
-                </select>
+            <div class="control-row">
+                <div class="control-header">
+                    <span class="control-label">Lautstärke (Gain)</span>
+                    <span class="control-value" id="valGain">100%</span>
+                </div>
+                <input type="range" id="sliderGain" min="0" max="150" value="100" step="1">
             </div>
         </div>
 
-        <div class="visualizer-container">
+        <div class="visualizer-box">
             <canvas id="visualizer"></canvas>
         </div>
 
-        <div class="action-buttons">
-            <button id="btnProcess" disabled>Konvertieren</button>
-            <button id="btnPlay" disabled>► Abspielen</button>
-            <button id="btnDownload" disabled>💾 WAV Herunterladen</button>
+        <div class="btn-group">
+            <button class="btn-secondary" id="btnPlay" disabled>Abspielen</button>
+            <button id="btnDownload" disabled>WAV Exportieren</button>
         </div>
     </div>
 
     <script>
-        let audioCtx;
+        let audioCtx = null;
         let originalBuffer = null;
-        let processedBuffer = null;
-        let currentSource = null;
+        let sourceNode = null;
+        let bassFilter = null;
+        let gainNode = null;
+        let analyserNode = null;
+        let isPlaying = false;
 
         const dropZone = document.getElementById('dropZone');
         const fileInput = document.getElementById('fileInput');
-        const fileInfo = document.getElementById('fileInfo');
-        const btnProcess = document.getElementById('btnProcess');
+        const fileStatus = document.getElementById('fileStatus');
+        
+        const sliderBoost = document.getElementById('sliderBoost');
+        const sliderFreq = document.getElementById('sliderFreq');
+        const sliderGain = document.getElementById('sliderGain');
+        
+        const valBoost = document.getElementById('valBoost');
+        const valFreq = document.getElementById('valFreq');
+        const valGain = document.getElementById('valGain');
+
         const btnPlay = document.getElementById('btnPlay');
         const btnDownload = document.getElementById('btnDownload');
-        const sampleRateInput = document.getElementById('sampleRate');
-        const sampleRateVal = document.getElementById('sampleRateVal');
-        const bitDepthSelect = document.getElementById('bitDepth');
-        const modeSelect = document.getElementById('mode');
         const canvas = document.getElementById('visualizer');
         const canvasCtx = canvas.getContext('2d');
 
-        // Canvas Setup
-        function resizeCanvas() {
-            canvas.width = canvas.parentElement.clientWidth;
-            canvas.height = canvas.parentElement.clientHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        // File Selection Handlers
+        // Drag & Drop Handlers
         dropZone.addEventListener('click', () => fileInput.click());
         dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
         dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
         dropZone.addEventListener('drop', (e) => {
             e.preventDefault();
             dropZone.classList.remove('dragover');
-            if (e.dataTransfer.files.length) loadFile(e.dataTransfer.files[0]);
+            if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
         });
         fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length) loadFile(e.target.files[0]);
+            if (e.target.files.length) handleFile(e.target.files[0]);
         });
 
-        sampleRateInput.addEventListener('input', (e) => {
-            sampleRateVal.textContent = `${e.target.value}x Downsampling`;
+        // Dynamic Slider Updates
+        sliderBoost.addEventListener('input', (e) => {
+            valBoost.textContent = `+${e.target.value} dB`;
+            if (bassFilter) bassFilter.gain.value = parseFloat(e.target.value);
         });
 
-        function loadFile(file) {
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        sliderFreq.addEventListener('input', (e) => {
+            valFreq.textContent = `${e.target.value} Hz`;
+            if (bassFilter) bassFilter.frequency.value = parseFloat(e.target.value);
+        });
+
+        sliderGain.addEventListener('input', (e) => {
+            valGain.textContent = `${e.target.value}%`;
+            if (gainNode) gainNode.gain.value = parseFloat(e.target.value) / 100;
+        });
+
+        // Load Audio File
+        function handleFile(file) {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            fileStatus.style.display = 'block';
+            fileStatus.textContent = `Lade ${file.name}...`;
+
             const reader = new FileReader();
-            
-            fileInfo.style.display = 'block';
-            fileInfo.textContent = `Lade Datei: ${file.name}...`;
-
             reader.onload = function(e) {
                 audioCtx.decodeAudioData(e.target.result, (buffer) => {
                     originalBuffer = buffer;
-                    fileInfo.textContent = `Geladen: ${file.name} | Dauer: ${buffer.duration.toFixed(1)}s | ${buffer.sampleRate}Hz`;
-                    btnProcess.disabled = false;
-                    btnPlay.disabled = true;
-                    btnDownload.disabled = true;
+                    fileStatus.textContent = `${file.name} (${buffer.duration.toFixed(1)}s)`;
+                    btnPlay.disabled = false;
+                    btnDownload.disabled = false;
                 }, () => {
-                    fileInfo.textContent = 'Fehler beim Decodieren der Audiodatei!';
+                    fileStatus.textContent = 'Fehler beim Laden der Audiodatei.';
                 });
             };
             reader.readAsArrayBuffer(file);
         }
 
-        // Core 4-Bit & 80s Sound Engine Processing
-        btnProcess.addEventListener('click', () => {
-            if (!originalBuffer) return;
+        // Setup Web Audio Graph
+        function setupAudioGraph() {
+            if (!audioCtx || !originalBuffer) return;
 
-            const bits = parseInt(bitDepthSelect.value);
-            const downsampleFactor = parseInt(sampleRateInput.value);
-            const isSquareMode = modeSelect.value === 'square';
-
-            const numChannels = originalBuffer.numberOfChannels;
-            const length = originalBuffer.length;
-            const sampleRate = originalBuffer.sampleRate;
-
-            processedBuffer = audioCtx.createBuffer(numChannels, length, sampleRate);
-
-            const stepCount = Math.pow(2, bits); // 4-bit = 16 levels
-
-            for (let channel = 0; channel < numChannels; channel++) {
-                const inputData = originalBuffer.getChannelData(channel);
-                const outputData = processedBuffer.getChannelData(channel);
-                let lastSample = 0;
-
-                for (let i = 0; i < length; i++) {
-                    // Downsampling (Hold sample)
-                    if (i % downsampleFactor === 0) {
-                        let sample = inputData[i];
-                        
-                        if (isSquareMode) {
-                            // Convert sound into classic 80s arcade square wave pulse
-                            sample = sample > 0 ? 0.8 : -0.8;
-                        } else {
-                            // 4-Bit Quantization
-                            sample = Math.floor((sample + 1) / 2 * stepCount) / stepCount * 2 - 1;
-                        }
-
-                        lastSample = sample;
-                    }
-                    outputData[i] = lastSample;
-                }
+            if (sourceNode) {
+                sourceNode.stop();
+                sourceNode.disconnect();
             }
 
-            fileInfo.textContent = `Erfolgreich konvertiert! (Modus: ${bits}-Bit, ${downsampleFactor}x Downsampling)`;
-            btnPlay.disabled = false;
-            btnDownload.disabled = false;
-            drawWaveform(processedBuffer.getChannelData(0));
-        });
+            sourceNode = audioCtx.createBufferSource();
+            sourceNode.buffer = originalBuffer;
 
-        // Audio Playback
+            // Lowshelf Filter for Bass Boost
+            bassFilter = audioCtx.createBiquadFilter();
+            bassFilter.type = 'lowshelf';
+            bassFilter.frequency.value = parseFloat(sliderFreq.value);
+            bassFilter.gain.value = parseFloat(sliderBoost.value);
+
+            // Volume Gain Node
+            gainNode = audioCtx.createGain();
+            gainNode.gain.value = parseFloat(sliderGain.value) / 100;
+
+            // Analyser for Visualization
+            analyserNode = audioCtx.createAnalyser();
+            analyserNode.fftSize = 128;
+
+            // Soft Limiter to avoid severe clipping
+            const compressor = audioCtx.createDynamicsCompressor();
+            compressor.threshold.value = -1.0;
+            compressor.knee.value = 0.0;
+            compressor.ratio.value = 20.0;
+            compressor.attack.value = 0.005;
+            compressor.release.value = 0.050;
+
+            // Connect Nodes
+            sourceNode.connect(bassFilter);
+            bassFilter.connect(gainNode);
+            gainNode.connect(compressor);
+            compressor.connect(analyserNode);
+            analyserNode.connect(audioCtx.destination);
+        }
+
+        // Play / Pause Logic
         btnPlay.addEventListener('click', () => {
-            if (!processedBuffer) return;
+            if (isPlaying) {
+                if (sourceNode) sourceNode.stop();
+                isPlaying = false;
+                btnPlay.textContent = 'Abspielen';
+            } else {
+                setupAudioGraph();
+                sourceNode.start();
+                isPlaying = true;
+                btnPlay.textContent = 'Stoppen';
 
-            if (currentSource) {
-                currentSource.stop();
-                currentSource = null;
-                btnPlay.textContent = '► Abspielen';
-                return;
+                sourceNode.onended = () => {
+                    isPlaying = false;
+                    btnPlay.textContent = 'Abspielen';
+                };
+
+                renderVisualizer();
             }
-
-            currentSource = audioCtx.createBufferSource();
-            currentSource.buffer = processedBuffer;
-
-            const analyser = audioCtx.createAnalyser();
-            analyser.fftSize = 256;
-            currentSource.connect(analyser);
-            analyser.connect(audioCtx.destination);
-
-            currentSource.start();
-            btnPlay.textContent = '█ Stoppen';
-
-            currentSource.onended = () => {
-                btnPlay.textContent = '► Abspielen';
-                currentSource = null;
-            };
-
-            // Live Visualizer loop
-            const bufferLength = analyser.frequencyBinCount;
-            const dataArray = new Uint8Array(bufferLength);
-
-            function draw() {
-                if (!currentSource) return;
-                requestAnimationFrame(draw);
-
-                analyser.getByteTimeDomainData(dataArray);
-                canvasCtx.fillStyle = '#000';
-                canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
-
-                canvasCtx.lineWidth = 2;
-                canvasCtx.strokeStyle = '#00ff66';
-                canvasCtx.beginPath();
-
-                const sliceWidth = canvas.width * 1.0 / bufferLength;
-                let x = 0;
-
-                for (let i = 0; i < bufferLength; i++) {
-                    const v = dataArray[i] / 128.0;
-                    const y = v * canvas.height / 2;
-
-                    if (i === 0) canvasCtx.moveTo(x, y);
-                    else canvasCtx.lineTo(x, y);
-
-                    x += sliceWidth;
-                }
-
-                canvasCtx.lineTo(canvas.width, canvas.height / 2);
-                canvasCtx.stroke();
-            }
-            draw();
         });
 
-        // Static Waveform Drawing
-        function drawWaveform(data) {
-            canvasCtx.fillStyle = '#000';
+        // Minimalist Visualizer
+        function renderVisualizer() {
+            if (!isPlaying || !analyserNode) return;
+            requestAnimationFrame(renderVisualizer);
+
+            const bufferLength = analyserNode.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+            analyserNode.getByteFrequencyData(dataArray);
+
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+
+            canvasCtx.fillStyle = '#000000';
             canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
-            canvasCtx.lineWidth = 1;
-            canvasCtx.strokeStyle = '#00e5ff';
-            canvasCtx.beginPath();
 
-            const step = Math.ceil(data.length / canvas.width);
-            const amp = canvas.height / 2;
+            const barWidth = (canvas.width / bufferLength) * 1.5;
+            let x = 0;
 
-            for (let i = 0; i < canvas.width; i++) {
-                let min = 1.0;
-                let max = -1.0;
-                for (let j = 0; j < step; j++) {
-                    const datum = data[(i * step) + j];
-                    if (datum < min) min = datum;
-                    if (datum > max) max = datum;
-                }
-                canvasCtx.fillRect(i, (1 + min) * amp, 1, Math.max(1, (max - min) * amp));
+            for (let i = 0; i < bufferLength; i++) {
+                const barHeight = (dataArray[i] / 255) * canvas.height;
+                canvasCtx.fillStyle = '#ffffff';
+                canvasCtx.fillRect(x, canvas.height - barHeight, barWidth - 1, barHeight);
+                x += barWidth;
             }
         }
 
-        // Export to WAV File
-        btnDownload.addEventListener('click', () => {
-            if (!processedBuffer) return;
+        // Export Processed Audio to WAV
+        btnDownload.addEventListener('click', async () => {
+            if (!originalBuffer) return;
 
-            const wavBuffer = bufferToWav(processedBuffer);
-            const blob = new Blob([wavBuffer], { type: 'audio/wav' });
-            const url = URL.createObjectURL(blob);
-            
+            btnDownload.disabled = true;
+            btnDownload.textContent = 'Berechne...';
+
+            const offlineCtx = new OfflineAudioContext(
+                originalBuffer.numberOfChannels,
+                originalBuffer.length,
+                originalBuffer.sampleRate
+            );
+
+            const offlineSource = offlineCtx.createBufferSource();
+            offlineSource.buffer = originalBuffer;
+
+            const offlineFilter = offlineCtx.createBiquadFilter();
+            offlineFilter.type = 'lowshelf';
+            offlineFilter.frequency.value = parseFloat(sliderFreq.value);
+            offlineFilter.gain.value = parseFloat(sliderBoost.value);
+
+            const offlineGain = offlineCtx.createGain();
+            offlineGain.gain.value = parseFloat(sliderGain.value) / 100;
+
+            const offlineCompressor = offlineCtx.createDynamicsCompressor();
+            offlineCompressor.threshold.value = -1.0;
+            offlineCompressor.knee.value = 0.0;
+            offlineCompressor.ratio.value = 20.0;
+
+            offlineSource.connect(offlineFilter);
+            offlineFilter.connect(offlineGain);
+            offlineGain.connect(offlineCompressor);
+            offlineCompressor.connect(offlineCtx.destination);
+
+            offlineSource.start();
+
+            const renderedBuffer = await offlineCtx.startRendering();
+            const wavBlob = audioBufferToWav(renderedBuffer);
+
+            const url = URL.createObjectURL(wavBlob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `oniinetools_4bit_${Date.now()}.wav`;
+            a.download = `oniinetools_bassboosted_${Date.now()}.wav`;
             a.click();
             URL.revokeObjectURL(url);
+
+            btnDownload.disabled = false;
+            btnDownload.textContent = 'WAV Exportieren';
         });
 
-        // Helper: AudioBuffer to PCM WAV Format
-        function bufferToWav(buffer) {
+        // Helper: Convert AudioBuffer to WAV File Blob
+        function audioBufferToWav(buffer) {
             const numChannels = buffer.numberOfChannels;
             const sampleRate = buffer.sampleRate;
             const format = 1; // PCM
@@ -470,14 +498,14 @@
                 result = buffer.getChannelData(0);
             }
 
-            return createWavFile(result, numChannels, sampleRate, bitDepth);
+            const dataView = encodeWAV(result, numChannels, sampleRate, bitDepth);
+            return new Blob([dataView], { type: 'audio/wav' });
         }
 
         function interleave(inputL, inputR) {
             const length = inputL.length + inputR.length;
             const result = new Float32Array(length);
-            let index = 0;
-            let inputIndex = 0;
+            let index = 0, inputIndex = 0;
 
             while (index < length) {
                 result[index++] = inputL[inputIndex];
@@ -487,53 +515,39 @@
             return result;
         }
 
-        function createWavFile(samples, numChannels, sampleRate, bitDepth) {
+        function encodeWAV(samples, numChannels, sampleRate, bitDepth) {
             const bytesPerSample = bitDepth / 8;
             const blockAlign = numChannels * bytesPerSample;
             const buffer = new ArrayBuffer(44 + samples.length * bytesPerSample);
             const view = new DataView(buffer);
 
-            /* RIFF identifier */
-            writeString(view, 0, 'RIFF');
-            /* RIFF chunk length */
+            const writeString = (offset, string) => {
+                for (let i = 0; i < string.length; i++) {
+                    view.setUint8(offset + i, string.charCodeAt(i));
+                }
+            };
+
+            writeString(0, 'RIFF');
             view.setUint32(4, 36 + samples.length * bytesPerSample, true);
-            /* RIFF type */
-            writeString(view, 8, 'WAVE');
-            /* format chunk identifier */
-            writeString(view, 12, 'fmt ');
-            /* format chunk length */
+            writeString(8, 'WAVE');
+            writeString(12, 'fmt ');
             view.setUint32(16, 16, true);
-            /* sample format (raw) */
             view.setUint16(20, 1, true);
-            /* channel count */
             view.setUint16(22, numChannels, true);
-            /* sample rate */
             view.setUint32(24, sampleRate, true);
-            /* byte rate (sample rate * block align) */
             view.setUint32(28, sampleRate * blockAlign, true);
-            /* block align */
             view.setUint16(32, blockAlign, true);
-            /* bits per sample */
             view.setUint16(34, bitDepth, true);
-            /* data chunk identifier */
-            writeString(view, 36, 'data');
-            /* data chunk length */
+            writeString(36, 'data');
             view.setUint32(40, samples.length * bytesPerSample, true);
 
-            // Write PCM samples
             let offset = 44;
             for (let i = 0; i < samples.length; i++, offset += 2) {
                 const s = Math.max(-1, Math.min(1, samples[i]));
                 view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
             }
 
-            return buffer;
-        }
-
-        function writeString(view, offset, string) {
-            for (let i = 0; i < string.length; i++) {
-                view.setUint8(offset + i, string.charCodeAt(i));
-            }
+            return view;
         }
     </script>
 </body>
