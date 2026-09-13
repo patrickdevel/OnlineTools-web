@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OnlineTools — Audio Werkzeuge</title>
+<title>OnlineTools — Audio Tools</title>
 <style>
   :root{
     --bg:#0b0b0d;
@@ -328,8 +328,8 @@
 
   <nav class="nav-drawer" id="navDrawer" aria-hidden="true">
     <div class="nav-drawer-header">
-      <span class="nav-drawer-title">Werkzeuge</span>
-      <button class="nav-close" id="navClose" aria-label="Menü schließen">
+      <span class="nav-drawer-title">Tools</span>
+      <button class="nav-close" id="navClose" aria-label="Close menu">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
@@ -338,42 +338,42 @@
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="19" x2="5" y2="10"/><line x1="12" y1="19" x2="12" y2="5"/><line x1="19" y1="19" x2="19" y2="13"/></svg>
         <span class="nav-item-text">
           <span class="nav-item-label">Bass Booster</span>
-          <span class="nav-item-sub">Bässe anheben &amp; exportieren</span>
+          <span class="nav-item-sub">Boost bass &amp; export</span>
         </span>
       </button>
       <button class="nav-item" data-view="convert">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
         <span class="nav-item-text">
-          <span class="nav-item-label">Konvertieren</span>
-          <span class="nav-item-sub">Audio &amp; Video in andere Formate</span>
+          <span class="nav-item-label">Convert</span>
+          <span class="nav-item-sub">Audio &amp; video to other formats</span>
         </span>
       </button>
       <button class="nav-item" data-view="trim">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
         <span class="nav-item-text">
-          <span class="nav-item-label">Schneiden</span>
-          <span class="nav-item-sub">Audio &amp; Video auf Ausschnitt kürzen</span>
+          <span class="nav-item-label">Trim</span>
+          <span class="nav-item-sub">Trim audio &amp; video to a clip</span>
         </span>
       </button>
       <button class="nav-item" data-view="v2a">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2" ry="2"/><line x1="7" y1="3" x2="7" y2="21"/><line x1="17" y1="3" x2="17" y2="21"/><line x1="2" y1="9" x2="7" y2="9"/><line x1="2" y1="15" x2="7" y2="15"/><line x1="17" y1="9" x2="22" y2="9"/><line x1="17" y1="15" x2="22" y2="15"/></svg>
         <span class="nav-item-text">
           <span class="nav-item-label">Video → Audio</span>
-          <span class="nav-item-sub">Tonspur aus Video extrahieren</span>
+          <span class="nav-item-sub">Extract audio track from video</span>
         </span>
       </button>
       <button class="nav-item" data-view="normalize">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
         <span class="nav-item-text">
-          <span class="nav-item-label">Lautstärke normalisieren</span>
-          <span class="nav-item-sub">Pegel auf Zielwert angleichen</span>
+          <span class="nav-item-label">Normalize Volume</span>
+          <span class="nav-item-sub">Match level to a target</span>
         </span>
       </button>
     </div>
   </nav>
 
   <header class="topbar">
-    <button class="hamburger" id="navOpen" aria-label="Menü öffnen">
+    <button class="hamburger" id="navOpen" aria-label="Open menu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
     <div class="brand">
@@ -391,11 +391,11 @@
         <div class="rack-panel">
           <div class="panel-head">
             <h1>Bass Booster</h1>
-            <p>Bässe anheben, abmischen und als WAV exportieren</p>
+            <p>Boost bass, mix it in, and export as WAV</p>
           </div>
 
           <div class="drop-zone" id="bbDropZone">
-            <div class="drop-zone-text">Audio-Datei auswählen oder hierher ziehen</div>
+            <div class="drop-zone-text">Choose an audio file or drag it here</div>
             <div class="drop-zone-sub">MP3, WAV, FLAC, M4A, OGG</div>
             <input type="file" id="bbFileInput" accept="audio/*">
           </div>
@@ -413,7 +413,7 @@
 
             <div class="control-row">
               <div class="control-header">
-                <span class="control-label">Frequenz (Cutoff)</span>
+                <span class="control-label">Frequency (Cutoff)</span>
                 <span class="control-value" id="bbValFreq">100 Hz</span>
               </div>
               <input type="range" id="bbSliderFreq" min="40" max="220" value="100" step="5">
@@ -421,7 +421,7 @@
 
             <div class="control-row">
               <div class="control-header">
-                <span class="control-label">Lautstärke (Gain)</span>
+                <span class="control-label">Volume (Gain)</span>
                 <span class="control-value" id="bbValGain">100%</span>
               </div>
               <input type="range" id="bbSliderGain" min="0" max="150" value="100" step="1">
@@ -433,23 +433,23 @@
           </div>
 
           <div class="btn-group">
-            <button class="btn btn-secondary" id="bbBtnPlay" disabled>Abspielen</button>
-            <button class="btn" id="bbBtnDownload" disabled>WAV Exportieren</button>
+            <button class="btn btn-secondary" id="bbBtnPlay" disabled>Play</button>
+            <button class="btn" id="bbBtnDownload" disabled>Export WAV</button>
           </div>
         </div>
       </section>
 
-      <!-- ================= KONVERTIEREN ================= -->
+      <!-- ================= CONVERT ================= -->
       <section class="view" id="view-convert">
         <div class="rack-panel">
           <div class="panel-head">
-            <h1>Konvertieren</h1>
-            <p>Audio- und Videodateien in ein anderes Format umwandeln</p>
+            <h1>Convert</h1>
+            <p>Convert audio and video files to another format</p>
           </div>
 
           <div class="drop-zone" id="cvDropZone">
-            <div class="drop-zone-text">Audio- oder Videodatei auswählen oder hierher ziehen</div>
-            <div class="drop-zone-sub">z. B. MP3, WAV, FLAC, M4A, OGG, AAC, MP4, MOV, MKV, WEBM</div>
+            <div class="drop-zone-text">Choose an audio or video file or drag it here</div>
+            <div class="drop-zone-sub">e.g. MP3, WAV, FLAC, M4A, OGG, AAC, MP4, MOV, MKV, WEBM</div>
             <input type="file" id="cvFileInput" accept="audio/*,video/*">
           </div>
 
@@ -457,18 +457,18 @@
 
           <div class="controls-grid">
             <div class="control-row">
-              <span class="field-label">Zielformat</span>
+              <span class="field-label">Target format</span>
               <div class="select-wrap">
                 <select class="format-select" id="cvFormatSelect">
                   <option value="mp3">MP3</option>
-                  <option value="wav">WAV (verlustfrei)</option>
-                  <option value="flac">FLAC (verlustfrei)</option>
+                  <option value="wav">WAV (lossless)</option>
+                  <option value="flac">FLAC (lossless)</option>
                   <option value="ogg">OGG (Vorbis)</option>
                   <option value="m4a">M4A / AAC</option>
                   <option value="opus">Opus</option>
                 </select>
               </div>
-              <p class="format-hint" id="cvFormatHint">Gute Balance aus Größe und Qualität.</p>
+              <p class="format-hint" id="cvFormatHint">Good balance of size and quality.</p>
             </div>
 
             <div class="control-row" id="cvBitrateRow">
@@ -482,28 +482,28 @@
           </div>
 
           <div class="btn-group">
-            <button class="btn btn-full" id="cvBtnConvert" disabled>In MP3 umwandeln</button>
+            <button class="btn btn-full" id="cvBtnConvert" disabled>Convert to MP3</button>
           </div>
 
           <div class="progress-row" id="cvProgressRow">
             <div class="progress-track"><div class="progress-fill" id="cvProgressFill"></div></div>
-            <div class="progress-label" id="cvProgressLabel">Wird konvertiert … 0%</div>
+            <div class="progress-label" id="cvProgressLabel">Converting … 0%</div>
           </div>
 
-          <p class="format-hint" style="margin-top:16px;">Beim ersten Konvertieren wird einmalig eine Konvertierungs-Engine geladen (ca. 30 MB, danach zwischengespeichert).</p>
+          <p class="format-hint" style="margin-top:16px;">The first time you convert, a conversion engine is loaded once (about 30 MB, then cached).</p>
         </div>
       </section>
 
-      <!-- ================= SCHNEIDEN ================= -->
+      <!-- ================= TRIM ================= -->
       <section class="view" id="view-trim">
         <div class="rack-panel">
           <div class="panel-head">
-            <h1>Schneiden</h1>
-            <p>Audio- oder Videodatei auf einen Ausschnitt kürzen</p>
+            <h1>Trim</h1>
+            <p>Trim an audio or video file down to a clip</p>
           </div>
 
           <div class="drop-zone" id="trDropZone">
-            <div class="drop-zone-text">Audio- oder Videodatei auswählen oder hierher ziehen</div>
+            <div class="drop-zone-text">Choose an audio or video file or drag it here</div>
             <div class="drop-zone-sub">MP3, WAV, FLAC, M4A, OGG, MP4, MOV, MKV, WEBM</div>
             <input type="file" id="trFileInput" accept="audio/*,video/*">
           </div>
@@ -520,7 +520,7 @@
             </div>
             <div class="control-row">
               <div class="control-header">
-                <span class="control-label">Ende</span>
+                <span class="control-label">End</span>
                 <span class="control-value" id="trValEnd">0:00</span>
               </div>
               <input type="range" id="trSliderEnd" min="0" max="0" value="0" step="0.1">
@@ -529,15 +529,15 @@
           </div>
 
           <div class="btn-group">
-            <button class="btn btn-full" id="trBtnCut" disabled>Ausschnitt herunterladen</button>
+            <button class="btn btn-full" id="trBtnCut" disabled>Download clip</button>
           </div>
 
           <div class="progress-row" id="trProgressRow">
             <div class="progress-track"><div class="progress-fill" id="trProgressFill"></div></div>
-            <div class="progress-label" id="trProgressLabel">Wird geschnitten … 0%</div>
+            <div class="progress-label" id="trProgressLabel">Trimming … 0%</div>
           </div>
 
-          <p class="format-hint" style="margin-top:16px;">Beim ersten Schneiden wird einmalig die Konvertierungs-Engine geladen (ca. 30 MB, danach zwischengespeichert).</p>
+          <p class="format-hint" style="margin-top:16px;">The first time you trim, a conversion engine is loaded once (about 30 MB, then cached).</p>
         </div>
       </section>
 
@@ -546,11 +546,11 @@
         <div class="rack-panel">
           <div class="panel-head">
             <h1>Video → Audio</h1>
-            <p>Tonspur aus einem Video extrahieren</p>
+            <p>Extract the audio track from a video</p>
           </div>
 
           <div class="drop-zone" id="vaDropZone">
-            <div class="drop-zone-text">Videodatei auswählen oder hierher ziehen</div>
+            <div class="drop-zone-text">Choose a video file or drag it here</div>
             <div class="drop-zone-sub">MP4, MOV, MKV, WEBM, AVI</div>
             <input type="file" id="vaFileInput" accept="video/*">
           </div>
@@ -559,12 +559,12 @@
 
           <div class="controls-grid">
             <div class="control-row">
-              <span class="field-label">Zielformat</span>
+              <span class="field-label">Target format</span>
               <div class="select-wrap">
                 <select class="format-select" id="vaFormatSelect">
                   <option value="mp3">MP3</option>
-                  <option value="wav">WAV (verlustfrei)</option>
-                  <option value="flac">FLAC (verlustfrei)</option>
+                  <option value="wav">WAV (lossless)</option>
+                  <option value="flac">FLAC (lossless)</option>
                   <option value="ogg">OGG (Vorbis)</option>
                   <option value="m4a">M4A / AAC</option>
                   <option value="opus">Opus</option>
@@ -583,26 +583,26 @@
           </div>
 
           <div class="btn-group">
-            <button class="btn btn-full" id="vaBtnExtract" disabled>Audio extrahieren</button>
+            <button class="btn btn-full" id="vaBtnExtract" disabled>Extract audio</button>
           </div>
 
           <div class="progress-row" id="vaProgressRow">
             <div class="progress-track"><div class="progress-fill" id="vaProgressFill"></div></div>
-            <div class="progress-label" id="vaProgressLabel">Wird extrahiert … 0%</div>
+            <div class="progress-label" id="vaProgressLabel">Extracting … 0%</div>
           </div>
         </div>
       </section>
 
-      <!-- ================= LAUTSTÄRKE NORMALISIEREN ================= -->
+      <!-- ================= NORMALIZE VOLUME ================= -->
       <section class="view" id="view-normalize">
         <div class="rack-panel">
           <div class="panel-head">
-            <h1>Lautstärke normalisieren</h1>
-            <p>Audiodatei auf einen gleichmäßigen Pegel bringen</p>
+            <h1>Normalize Volume</h1>
+            <p>Bring an audio file to a consistent level</p>
           </div>
 
           <div class="drop-zone" id="nmDropZone">
-            <div class="drop-zone-text">Audiodatei auswählen oder hierher ziehen</div>
+            <div class="drop-zone-text">Choose an audio file or drag it here</div>
             <div class="drop-zone-sub">MP3, WAV, FLAC, M4A, OGG</div>
             <input type="file" id="nmFileInput" accept="audio/*">
           </div>
@@ -612,21 +612,21 @@
           <div class="controls-grid">
             <div class="control-row">
               <div class="control-header">
-                <span class="control-label">Ziellautheit</span>
+                <span class="control-label">Target Loudness</span>
                 <span class="control-value" id="nmValTarget">-16 LUFS</span>
               </div>
               <input type="range" id="nmSliderTarget" min="-30" max="-8" value="-16" step="1">
-              <p class="format-hint">Streaming-Standard liegt bei etwa -14 bis -16 LUFS. Niedrigere Werte (z. B. -23) klingen leiser und dynamischer.</p>
+              <p class="format-hint">Streaming platforms typically target around -14 to -16 LUFS. Lower values (e.g. -23) sound quieter and more dynamic.</p>
             </div>
           </div>
 
           <div class="btn-group">
-            <button class="btn btn-full" id="nmBtnNormalize" disabled>Normalisieren &amp; herunterladen</button>
+            <button class="btn btn-full" id="nmBtnNormalize" disabled>Normalize &amp; Download</button>
           </div>
 
           <div class="progress-row" id="nmProgressRow">
             <div class="progress-track"><div class="progress-fill" id="nmProgressFill"></div></div>
-            <div class="progress-label" id="nmProgressLabel">Wird normalisiert … 0%</div>
+            <div class="progress-label" id="nmProgressLabel">Normalizing … 0%</div>
           </div>
         </div>
       </section>
@@ -647,10 +647,10 @@
 
     const viewMeta = {
       bass: { tag: '— Bass Booster' },
-      convert: { tag: '— Konvertieren' },
-      trim: { tag: '— Schneiden' },
+      convert: { tag: '— Convert' },
+      trim: { tag: '— Trim' },
       v2a: { tag: '— Video → Audio' },
-      normalize: { tag: '— Lautstärke normalisieren' }
+      normalize: { tag: '— Normalize Volume' }
     };
 
     function openDrawer(){
@@ -769,7 +769,7 @@
     function handleBassFile(file){
       bbFileStatus.className = 'file-status';
       bbFileStatus.style.display = 'block';
-      bbFileStatus.textContent = `Lade ${file.name} …`;
+      bbFileStatus.textContent = `Loading ${file.name} …`;
       bbBtnPlay.disabled = true;
       bbBtnDownload.disabled = true;
 
@@ -782,7 +782,7 @@
           bbBtnDownload.disabled = false;
         }, () => {
           bbFileStatus.classList.add('error');
-          bbFileStatus.textContent = 'Fehler beim Laden der Audiodatei.';
+          bbFileStatus.textContent = 'Failed to load the audio file.';
         });
       };
       reader.readAsArrayBuffer(file);
@@ -825,7 +825,7 @@
       if (bbIsPlaying && bbSourceNode){
         bbSourceNode.stop();
         bbIsPlaying = false;
-        bbBtnPlay.textContent = 'Abspielen';
+        bbBtnPlay.textContent = 'Play';
       }
     }
 
@@ -836,10 +836,10 @@
         setupBassGraph();
         bbSourceNode.start();
         bbIsPlaying = true;
-        bbBtnPlay.textContent = 'Stoppen';
+        bbBtnPlay.textContent = 'Stop';
         bbSourceNode.onended = () => {
           bbIsPlaying = false;
-          bbBtnPlay.textContent = 'Abspielen';
+          bbBtnPlay.textContent = 'Play';
         };
         renderBassVisualizer();
       }
@@ -875,7 +875,7 @@
     bbBtnDownload.addEventListener('click', async () => {
       if (!bbOriginalBuffer) return;
       bbBtnDownload.disabled = true;
-      bbBtnDownload.textContent = 'Berechne …';
+      bbBtnDownload.textContent = 'Processing …';
 
       const offlineCtx = new OfflineAudioContext(
         bbOriginalBuffer.numberOfChannels,
@@ -912,7 +912,7 @@
       downloadBlob(wavBlob, `onlinetools_bassboosted_${Date.now()}.wav`);
 
       bbBtnDownload.disabled = false;
-      bbBtnDownload.textContent = 'WAV Exportieren';
+      bbBtnDownload.textContent = 'Export WAV';
     });
 
     function audioBufferToWav(buffer){
@@ -977,21 +977,19 @@
   </script>
 
   <!-- ======================================================
-       KONVERTIEREN / SCHNEIDEN / VIDEO→AUDIO / NORMALISIEREN
-       — laufen alle über die gleiche FFmpeg (WebAssembly) Instanz
-       im Browser, dadurch werden deutlich mehr Format-Kombinationen
-       unterstützt.
+       CONVERT / TRIM / VIDEO→AUDIO / NORMALIZE
+       — all run over the same in-browser FFmpeg (WebAssembly)
+       instance, which supports far more format combinations.
   ====================================================== -->
   <script type="module">
-    /* ---------- gemeinsame FFmpeg-Instanz ----------
-       Wichtig: FFmpeg wird NICHT als statisches "import" ganz oben geladen.
-       Ein statischer Import, der aus irgendeinem Grund fehlschlägt (CDN,
-       Netzwerk, falsche Version), würde sonst das komplette Modul-Script
-       abbrechen — dann funktioniert in diesem Block gar nichts mehr, auch
-       keine Dropdowns, Regler oder Datei-Uploads. Stattdessen wird FFmpeg
-       per dynamischem import() erst beim ersten tatsächlichen Gebrauch
-       nachgeladen, und Fehler dabei werden abgefangen, ohne den Rest der
-       Seite lahmzulegen. */
+    /* ---------- shared FFmpeg instance ----------
+       Important: FFmpeg is NOT loaded as a static "import" at the top.
+       A static import that fails for any reason (CDN, network, wrong
+       version) would abort this entire module script — then nothing
+       in this block would work anymore, not even dropdowns, sliders,
+       or file uploads. Instead, FFmpeg is loaded via a dynamic import()
+       only on first actual use, and errors there are caught without
+       breaking the rest of the page. */
     let ffmpeg = null;
     let ffmpegLoadPromise = null;
     let currentProgressCb = null;
@@ -1002,11 +1000,11 @@
       if (ffmpeg) return Promise.resolve(ffmpeg);
       if (ffmpegLoadPromise) return ffmpegLoadPromise;
 
-      if (onInitialLoadProgress) onInitialLoadProgress(0, 'Engine wird geladen … (einmalig, ca. 30 MB)');
+      if (onInitialLoadProgress) onInitialLoadProgress(0, 'Loading engine … (one-time, ~30 MB)');
 
       ffmpegLoadPromise = (async () => {
-        const ffmpegMod = await import('https://cdn.jsdelivr.net/npm/@ffmpeg/[email protected]/dist/esm/index.js');
-        const utilMod = await import('https://cdn.jsdelivr.net/npm/@ffmpeg/[email protected]/dist/esm/index.js');
+        const ffmpegMod = await import('https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/esm/index.js');
+        const utilMod = await import('https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/esm/index.js');
         fetchFile = utilMod.fetchFile;
         toBlobURL = utilMod.toBlobURL;
 
@@ -1015,14 +1013,14 @@
           if (currentProgressCb) currentProgressCb(Math.min(100, Math.max(0, Math.round(progress * 100))));
         });
 
-        const baseURL = 'https://cdn.jsdelivr.net/npm/@ffmpeg/[email protected]/dist/esm';
+        const baseURL = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/esm';
         const coreURL = await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript');
         const wasmURL = await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm');
         await instance.load({ coreURL, wasmURL });
         ffmpeg = instance;
         return ffmpeg;
       })().catch((err) => {
-        ffmpegLoadPromise = null; // beim nächsten Versuch neu laden statt hängen zu bleiben
+        ffmpegLoadPromise = null; // reload on next attempt instead of staying stuck
         throw err;
       });
 
@@ -1030,12 +1028,12 @@
     }
 
     const FORMAT_INFO = {
-      mp3:  { ext: 'mp3',  mime: 'audio/mpeg', lossy: true,  hint: 'Gute Balance aus Größe und Qualität, von fast allem abspielbar.' },
-      wav:  { ext: 'wav',  mime: 'audio/wav',  lossy: false, hint: 'Unkomprimiert, verlustfrei, aber große Dateigröße.' },
-      flac: { ext: 'flac', mime: 'audio/flac', lossy: false, hint: 'Verlustfrei und deutlich kleiner als WAV.' },
-      ogg:  { ext: 'ogg',  mime: 'audio/ogg',  lossy: true,  hint: 'Offenes Format, ähnliche Qualität wie MP3.' },
-      m4a:  { ext: 'm4a',  mime: 'audio/mp4',  lossy: true,  hint: 'AAC-Format, Standard bei Apple-Geräten.' },
-      opus: { ext: 'opus', mime: 'audio/opus', lossy: true,  hint: 'Sehr effizient, ideal für Sprache und kleine Dateien.' }
+      mp3:  { ext: 'mp3',  mime: 'audio/mpeg', lossy: true,  hint: 'Good balance of size and quality, playable almost everywhere.' },
+      wav:  { ext: 'wav',  mime: 'audio/wav',  lossy: false, hint: 'Uncompressed, lossless, but large file size.' },
+      flac: { ext: 'flac', mime: 'audio/flac', lossy: false, hint: 'Lossless and noticeably smaller than WAV.' },
+      ogg:  { ext: 'ogg',  mime: 'audio/ogg',  lossy: true,  hint: 'Open format, similar quality to MP3.' },
+      m4a:  { ext: 'm4a',  mime: 'audio/mp4',  lossy: true,  hint: 'AAC format, standard on Apple devices.' },
+      opus: { ext: 'opus', mime: 'audio/opus', lossy: true,  hint: 'Very efficient, great for speech and small files.' }
     };
 
     function audioEncodeArgs(targetFormat, bitrate){
@@ -1049,7 +1047,7 @@
     }
 
     /* ======================================================
-       KONVERTIEREN
+       CONVERT
     ====================================================== */
     const cvDropZone = document.getElementById('cvDropZone');
     const cvFileInput = document.getElementById('cvFileInput');
@@ -1070,7 +1068,7 @@
       const info = FORMAT_INFO[cvFormatSelect.value];
       cvBitrateRow.style.display = info.lossy ? 'flex' : 'none';
       cvFormatHint.textContent = info.hint;
-      cvBtnConvert.textContent = `In ${cvFormatSelect.value.toUpperCase()} umwandeln`;
+      cvBtnConvert.textContent = `Convert to ${cvFormatSelect.value.toUpperCase()}`;
     }
     cvFormatSelect.addEventListener('change', updateFormatUI);
     updateFormatUI();
@@ -1128,26 +1126,26 @@
       try{
         const ff = await ensureFFmpeg(showCvProgress);
 
-        currentProgressCb = (pct) => showCvProgress(pct, `Wird konvertiert … ${pct}%`);
-        showCvProgress(0, 'Datei wird vorbereitet …');
+        currentProgressCb = (pct) => showCvProgress(pct, `Converting … ${pct}%`);
+        showCvProgress(0, 'Preparing file …');
 
         await ff.writeFile(inputName, await fetchFile(cvFile));
 
         const args = ['-i', inputName, '-vn', ...audioEncodeArgs(targetFormat, cvBitrate), outputName];
 
-        showCvProgress(0, 'Wird konvertiert … 0%');
+        showCvProgress(0, 'Converting … 0%');
         await ff.exec(args);
 
         const data = await ff.readFile(outputName);
         const blob = new Blob([data.buffer], { type: info.mime });
-        showCvProgress(100, 'Fertig');
+        showCvProgress(100, 'Done');
         window.downloadBlob(blob, `${baseName}.${info.ext}`);
 
         ff.deleteFile(inputName).catch(() => {});
         ff.deleteFile(outputName).catch(() => {});
       } catch (err){
         cvFileStatus.classList.add('error');
-        cvFileStatus.textContent = 'Konvertierung fehlgeschlagen. Format eventuell nicht unterstützt oder keine Internetverbindung für die Engine.';
+        cvFileStatus.textContent = 'Conversion failed. The format may not be supported, or the engine has no internet connection.';
       }
 
       currentProgressCb = null;
@@ -1156,7 +1154,7 @@
     });
 
     /* ======================================================
-       SCHNEIDEN
+       TRIM
     ====================================================== */
     const trDropZone = document.getElementById('trDropZone');
     const trFileInput = document.getElementById('trFileInput');
@@ -1191,7 +1189,7 @@
       trFile = file;
       trFileStatus.className = 'file-status';
       trFileStatus.style.display = 'block';
-      trFileStatus.textContent = `Lade ${file.name} …`;
+      trFileStatus.textContent = `Loading ${file.name} …`;
       trBtnCut.disabled = true;
       trControls.style.display = 'none';
 
@@ -1208,14 +1206,14 @@
         trSliderEnd.value = trDuration;
         trValStart.textContent = window.formatTime(0);
         trValEnd.textContent = window.formatTime(trDuration);
-        trDurationHint.textContent = `Gesamtlänge: ${window.formatTime(trDuration)}`;
+        trDurationHint.textContent = `Total length: ${window.formatTime(trDuration)}`;
         trFileStatus.textContent = `${file.name} (${window.formatTime(trDuration)})`;
         trControls.style.display = 'flex';
         trBtnCut.disabled = false;
       };
       mediaEl.onerror = () => {
         trFileStatus.classList.add('error');
-        trFileStatus.textContent = 'Datei konnte nicht gelesen werden.';
+        trFileStatus.textContent = 'The file could not be read.';
       };
     }
 
@@ -1254,11 +1252,11 @@
 
       try{
         const ff = await ensureFFmpeg(showTrProgress);
-        currentProgressCb = (pct) => showTrProgress(pct, `Wird geschnitten … ${pct}%`);
-        showTrProgress(0, 'Datei wird vorbereitet …');
+        currentProgressCb = (pct) => showTrProgress(pct, `Trimming … ${pct}%`);
+        showTrProgress(0, 'Preparing file …');
         await ff.writeFile(inputName, await fetchFile(trFile));
 
-        showTrProgress(0, 'Wird geschnitten … 0%');
+        showTrProgress(0, 'Trimming … 0%');
         let ret = await ff.exec(['-i', inputName, '-ss', String(start), '-to', String(end), '-c', 'copy', outputName]);
         if (ret !== 0){
           await ff.deleteFile(outputName).catch(() => {});
@@ -1267,14 +1265,14 @@
 
         const data = await ff.readFile(outputName);
         const blob = new Blob([data.buffer], { type: trFile.type || 'application/octet-stream' });
-        showTrProgress(100, 'Fertig');
-        window.downloadBlob(blob, `${baseName}_geschnitten.${ext}`);
+        showTrProgress(100, 'Done');
+        window.downloadBlob(blob, `${baseName}_trimmed.${ext}`);
 
         ff.deleteFile(inputName).catch(() => {});
         ff.deleteFile(outputName).catch(() => {});
       } catch(err){
         trFileStatus.classList.add('error');
-        trFileStatus.textContent = 'Schneiden fehlgeschlagen.';
+        trFileStatus.textContent = 'Trim failed.';
       }
       currentProgressCb = null;
       setTimeout(hideTrProgress, 800);
@@ -1356,25 +1354,25 @@
 
       try{
         const ff = await ensureFFmpeg(showVaProgress);
-        currentProgressCb = (pct) => showVaProgress(pct, `Wird extrahiert … ${pct}%`);
-        showVaProgress(0, 'Datei wird vorbereitet …');
+        currentProgressCb = (pct) => showVaProgress(pct, `Extracting … ${pct}%`);
+        showVaProgress(0, 'Preparing file …');
         await ff.writeFile(inputName, await fetchFile(vaFile));
 
         const args = ['-i', inputName, '-vn', ...audioEncodeArgs(targetFormat, vaBitrate), outputName];
 
-        showVaProgress(0, 'Wird extrahiert … 0%');
+        showVaProgress(0, 'Extracting … 0%');
         await ff.exec(args);
 
         const data = await ff.readFile(outputName);
         const blob = new Blob([data.buffer], { type: info.mime });
-        showVaProgress(100, 'Fertig');
+        showVaProgress(100, 'Done');
         window.downloadBlob(blob, `${baseName}.${info.ext}`);
 
         ff.deleteFile(inputName).catch(() => {});
         ff.deleteFile(outputName).catch(() => {});
       } catch(err){
         vaFileStatus.classList.add('error');
-        vaFileStatus.textContent = 'Extraktion fehlgeschlagen.';
+        vaFileStatus.textContent = 'Extraction failed.';
       }
       currentProgressCb = null;
       setTimeout(hideVaProgress, 800);
@@ -1382,7 +1380,7 @@
     });
 
     /* ======================================================
-       LAUTSTÄRKE NORMALISIEREN
+       NORMALIZE VOLUME
     ====================================================== */
     const nmDropZone = document.getElementById('nmDropZone');
     const nmFileInput = document.getElementById('nmFileInput');
@@ -1442,23 +1440,23 @@
 
       try{
         const ff = await ensureFFmpeg(showNmProgress);
-        currentProgressCb = (pct) => showNmProgress(pct, `Wird normalisiert … ${pct}%`);
-        showNmProgress(0, 'Datei wird vorbereitet …');
+        currentProgressCb = (pct) => showNmProgress(pct, `Normalizing … ${pct}%`);
+        showNmProgress(0, 'Preparing file …');
         await ff.writeFile(inputName, await fetchFile(nmFile));
 
-        showNmProgress(0, 'Wird normalisiert … 0%');
+        showNmProgress(0, 'Normalizing … 0%');
         await ff.exec(['-i', inputName, '-af', `loudnorm=I=${target}:TP=-1.5:LRA=11`, outputName]);
 
         const data = await ff.readFile(outputName);
         const blob = new Blob([data.buffer], { type: nmFile.type || 'audio/mpeg' });
-        showNmProgress(100, 'Fertig');
-        window.downloadBlob(blob, `${baseName}_normalisiert.${ext}`);
+        showNmProgress(100, 'Done');
+        window.downloadBlob(blob, `${baseName}_normalized.${ext}`);
 
         ff.deleteFile(inputName).catch(() => {});
         ff.deleteFile(outputName).catch(() => {});
       } catch(err){
         nmFileStatus.classList.add('error');
-        nmFileStatus.textContent = 'Normalisierung fehlgeschlagen.';
+        nmFileStatus.textContent = 'Normalization failed.';
       }
       currentProgressCb = null;
       setTimeout(hideNmProgress, 800);
